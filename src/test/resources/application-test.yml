@@ -1,0 +1,4 @@
+logging:
+  level:
+    org.springframework.web: DEBUG
+    com.vietbank.vietbank_digital.config.exception: DEBUG
