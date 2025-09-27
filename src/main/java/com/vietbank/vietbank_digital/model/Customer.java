@@ -1,4 +1,4 @@
-package com.vietbank.vietbank_digital.entity;
+package com.vietbank.vietbank_digital.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,12 +19,10 @@ public class Customer {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
 
     @Column(name = "citizen_id")
     private String citizenId;
-    private String email;
+
     private String address;
 
     @Column(name = "date_of_birth")

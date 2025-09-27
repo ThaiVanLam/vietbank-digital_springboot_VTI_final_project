@@ -15,12 +15,14 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -138,27 +140,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, status);
     }
 
-    // bean validation error
-    @SuppressWarnings("rawtypes")
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException exception) {
-
-        String message = getMessage("MethodArgumentNotValidException.message");
-        String detailMessage = exception.getLocalizedMessage();
-        // error
-        Map<String, String> errors = new HashMap<>();
-        for (ConstraintViolation violation : exception.getConstraintViolations()) {
-            String fieldName = violation.getPropertyPath().toString();
-            String errorMessage = violation.getMessage();
-            errors.put(fieldName, errorMessage);
-        }
-        int code = 5;
-        String moreInformation = "http://localhost:8080/api/v1/exception/5";
-
-        ErrorResponse response = new ErrorResponse(message, detailMessage, errors, code, moreInformation);
-
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
 
     // MissingServletRequestPartException: This exception is thrown when when the part of a multipart request not found
     // MissingServletRequestParameterException: This exception is thrown when request missing parameter:

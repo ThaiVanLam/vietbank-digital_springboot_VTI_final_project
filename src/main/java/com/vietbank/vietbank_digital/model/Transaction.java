@@ -1,4 +1,4 @@
-package com.vietbank.vietbank_digital.entity;
+package com.vietbank.vietbank_digital.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

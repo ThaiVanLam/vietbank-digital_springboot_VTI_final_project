@@ -61,7 +61,7 @@ public class RestExceptionHandlerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value(5))
-                .andExpect(jsonPath("$.errors").exists());
+                .andExpect(jsonPath("$.error").exists());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class RestExceptionHandlerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value(5))
-                .andExpect(jsonPath("$.errors").exists());
+                .andExpect(jsonPath("$.error").exists());
     }
 
     @Test

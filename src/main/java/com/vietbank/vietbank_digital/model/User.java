@@ -1,6 +1,9 @@
-package com.vietbank.vietbank_digital.entity;
+package com.vietbank.vietbank_digital.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,13 +17,23 @@ public class User {
     private Long id;
 
     @Column(name = "phone_number", nullable = false, unique = true, length = 15)
-    private String phoneNumber;
+    private String phoneNumber = "000000000000000";
 
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.CUSTOMER;
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "full_name", nullable = false)
+    private String fullName = "fullname default";
+
+    @Column(nullable = false)
+    private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
@@ -39,9 +52,12 @@ public class User {
     @Column(name = "updated_by")
     private Long updatedBy;
 
-    public enum Role {
-        CUSTOMER, STAFF
+    public User( String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
+
 
     public enum Status {
         ACTIVE, INACTIVE, LOCKED

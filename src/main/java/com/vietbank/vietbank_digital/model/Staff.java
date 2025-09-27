@@ -1,4 +1,4 @@
-package com.vietbank.vietbank_digital.entity;
+package com.vietbank.vietbank_digital.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -17,14 +17,10 @@ public class Staff {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
 
     @Column(name = "employee_code", nullable = false, unique = true)
     private String employeeCode;
 
-    @Column(nullable = false)
-    private String email;
 
     private String department;
     private String position;
