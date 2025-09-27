@@ -1,6 +1,7 @@
 package com.vietbank.vietbank_digital.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,32 +9,22 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "staff")
 @Data
+@AllArgsConstructor
 public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
 
     @Column(name = "employee_code", nullable = false, unique = true)
     private String employeeCode;
 
-
+    @Column(name = "department", nullable = false)
     private String department;
+    @Column(name = "position", nullable = false)
     private String position;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
-
-    @Column(name = "created_by")
-    private Long createdBy;
-    @Column(name = "updated_by")
-    private Long updatedBy;
 }

@@ -3,8 +3,10 @@ package com.vietbank.vietbank_digital.controller;
 
 import com.vietbank.vietbank_digital.model.AppRole;
 import com.vietbank.vietbank_digital.model.Role;
+import com.vietbank.vietbank_digital.model.Staff;
 import com.vietbank.vietbank_digital.model.User;
 import com.vietbank.vietbank_digital.repository.RoleRepository;
+import com.vietbank.vietbank_digital.repository.StaffRepository;
 import com.vietbank.vietbank_digital.repository.UserRepository;
 import com.vietbank.vietbank_digital.security.jwt.JwtUtils;
 import com.vietbank.vietbank_digital.security.request.LoginRequest;
@@ -12,6 +14,7 @@ import com.vietbank.vietbank_digital.security.request.SignupRequest;
 import com.vietbank.vietbank_digital.security.response.MessageResponse;
 import com.vietbank.vietbank_digital.security.response.UserInfoResponse;
 import com.vietbank.vietbank_digital.security.services.UserDetailsImpl;
+import com.vietbank.vietbank_digital.service.EmployeeCodeGenerator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -47,6 +50,12 @@ public class AuthController {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private EmployeeCodeGenerator employeeCodeGenerator;
+
+    @Autowired
+    private StaffRepository staffRepository;
+
     public AuthController(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
@@ -72,7 +81,7 @@ public class AuthController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(loginResponse);
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/staff/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
@@ -82,33 +91,16 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
         }
 
-        User user = new User(signupRequest.getUsername(), signupRequest.getEmail(), passwordEncoder.encode(signupRequest.getPassword()));
+        User user = new User(signupRequest.getUsername(), signupRequest.getPhoneNumber(), signupRequest.getFullName(), signupRequest.getEmail(), passwordEncoder.encode(signupRequest.getPassword()));
 
-        String strRole = signupRequest.getRole();
-        Role role = null;
+        Role staffRole = roleRepository.findByRoleName(AppRole.ROLE_STAFF).orElseThrow(() -> new RuntimeException("Error: Role is not found!"));
 
-        if (strRole.isBlank()) {
-            Role userRole = roleRepository.findByRoleName(AppRole.ROLE_CUSTOMER).orElseThrow(() -> new RuntimeException("Error: Role is not found!"));
-            role = userRole;
-        } else {
-            switch (strRole) {
-                case "customer":
-                    Role customerRole = roleRepository.findByRoleName(AppRole.ROLE_CUSTOMER).orElseThrow(() -> new RuntimeException("Error: Role is not found!"));
-                    role = customerRole;
-                    break;
-                case "staff":
-                    Role staffRole = roleRepository.findByRoleName(AppRole.ROLE_STAFF).orElseThrow(() -> new RuntimeException("Error: Role is not found!"));
-                    role = staffRole;
-                    break;
-                default:
-                    Role userRole = roleRepository.findByRoleName(AppRole.ROLE_CUSTOMER).orElseThrow(() -> new RuntimeException("Error: Role is not found!"));
-                    role = userRole;
+        user.setRole(staffRole);
 
-            }
-        }
-        user.setRole(role);
-        userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully"));
+        Staff staff = new Staff(user.getId(), user, employeeCodeGenerator.generateSequentialUniqueCode(), signupRequest.getDepartment(), signupRequest.getPosition());
+
+        staffRepository.save(staff);
+        return ResponseEntity.ok(new MessageResponse("Staff registered successfully"));
     }
 
     @GetMapping("/username")

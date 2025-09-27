@@ -5,19 +5,23 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "phone_number", nullable = false, unique = true, length = 15)
-    private String phoneNumber = "000000000000000";
+    private String phoneNumber;
 
     @Column(nullable = false)
     private String password;
@@ -26,7 +30,7 @@ public class User {
     private String username;
 
     @Column(name = "full_name", nullable = false)
-    private String fullName = "fullname default";
+    private String fullName;
 
     @Column(nullable = false)
     private String email;
@@ -39,23 +43,28 @@ public class User {
     private Status status = Status.ACTIVE;
 
     @Column(name = "created_at")
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @Column(name = "created_by")
-    private Long createdBy;
-    @Column(name = "updated_by")
-    private Long updatedBy;
-
-    public User( String username, String email, String password) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String username, String phoneNumber, String fullName, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.fullName = fullName;
     }
 
 

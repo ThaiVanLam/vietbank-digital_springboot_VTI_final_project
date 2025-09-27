@@ -2,6 +2,7 @@ package com.vietbank.vietbank_digital.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -41,6 +42,7 @@ public class BankAccount {
     private BigDecimal interestRate;
 
     @Column(name = "created_at")
+    @CreationTimestamp
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
