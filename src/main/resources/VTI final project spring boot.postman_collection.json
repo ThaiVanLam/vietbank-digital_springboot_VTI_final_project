@@ -1,0 +1,827 @@
+{
+	"info": {
+		"_postman_id": "955c5726-3fcc-49dd-9e09-49e8227c9226",
+		"name": "VTI final project spring boot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45463773",
+		"_collection_link": "https://interstellar-capsule-7230770.postman.co/workspace/Th%C3%A1i-V%C4%83n-L%C3%A2m's-Workspace~97739eb7-67d9-408a-8df6-5b98b77d5864/collection/45463773-955c5726-3fcc-49dd-9e09-49e8227c9226?action=share&source=collection_link&creator=45463773"
+	},
+	"item": [
+		{
+			"name": "VTI final project spring boot Copy",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "sign in by staff",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"staff001\",\r\n  \"password\": \"Staff@123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/signin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "signup for staff",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"staff001\",\r\n  \"email\": \"staff001@vietbank.com\",\r\n  \"phoneNumber\": \"0901234567\",\r\n  \"fullName\": \"Nguyen Van A\",\r\n  \"password\": \"Staff@123456\",\r\n  \"department\": \"Customer Service\",\r\n  \"position\": \"Senior Staff\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/staff/signup?lang=vi",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"staff",
+										"signup"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "vi"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get username",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/auth/username",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"username"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get user",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"user3\",\r\n    \"email\":\"user3email@gmail.com\",\r\n    \"password\":\"password3\",\r\n    \"phoneNumber\": \"0912410902\",\r\n    \"fullName\": \"Thái Văn Lâm\",\r\n    \"department\": \"department 1\",\r\n    \"position\": \"position 1\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/user?lang=vi",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"user"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "vi"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "đăng xuất",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"user3\",\r\n    \"password\":\"password3\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/signout?lang=vi",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"signout"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "vi"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "sign in by customer",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"customer003\",\r\n  \"password\": \"Abc@123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/signin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Staff",
+					"item": [
+						{
+							"name": "Bank account",
+							"item": [
+								{
+									"name": "Tạo Tài Khoản Ngân Hàng",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"customerId\": 2,\r\n  \"accountType\": \"SAVINGS\",\r\n  \"initialDeposit\": 1000000,\r\n  \"interestRate\": 5.5\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/staff/accounts",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"staff",
+												"accounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Xem Chi Tiết Tài Khoản",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/staff/accounts/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"staff",
+												"accounts",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Danh Sách Tài Khoản / Tìm Kiếm",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/staff/accounts?customerId&accountType&customerName&page&size&sort",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"staff",
+												"accounts"
+											],
+											"query": [
+												{
+													"key": "customerId",
+													"value": null
+												},
+												{
+													"key": "accountNumber",
+													"value": "384851652783",
+													"disabled": true
+												},
+												{
+													"key": "accountType",
+													"value": null
+												},
+												{
+													"key": "status",
+													"value": "ACTIVE",
+													"disabled": true
+												},
+												{
+													"key": "customerName",
+													"value": null
+												},
+												{
+													"key": "page",
+													"value": null
+												},
+												{
+													"key": "size",
+													"value": null
+												},
+												{
+													"key": "sort",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Nộp Tiền Vào Tài Khoản",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"amount\": 500000,\r\n  \"description\": \"Nộp tiền mặt\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/staff/accounts/1/deposit",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"staff",
+												"accounts",
+												"1",
+												"deposit"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Thay Đổi Trạng Thái Tài Khoản",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"status\": \"INACTIVE\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/staff/accounts/1/status",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"staff",
+												"accounts",
+												"1",
+												"status"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "tạo khách hàng mới",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"Tran Thi E\",\r\n  \"phoneNumber\": \"0912345674\",\r\n  \"email\": \"customer003@gmail.com\",\r\n  \"citizenId\": \"001234567892\",\r\n  \"address\": \"456 Le Loi, Q3, TP.HCM\",\r\n  \"dateOfBirth\": \"1995-08-20\",\r\n  \"gender\": \"FEMALE\",\r\n  \"occupation\": \"Teacher\",\r\n  \"username\": \"customer004\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/staff/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"staff",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cập nhật thông tin khách hàng",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"Tran Thi C Updated\",\r\n  \"phoneNumber\": \"0912345678\",\r\n  \"email\": \"customer002_updated@gmail.com\",\r\n  \"citizenId\": \"001234567891\",\r\n  \"address\": \"789 Tran Hung Dao, Q5, TP.HCM\",\r\n  \"dateOfBirth\": \"1995-08-20\",\r\n  \"gender\": \"FEMALE\",\r\n  \"occupation\": \"Senior Teacher\",\r\n  \"username\": \"customer002\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/staff/customers/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"staff",
+										"customers",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xóa khách hàng",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"Tran Thi C\",\r\n  \"phoneNumber\": \"0912345678\",\r\n  \"email\": \"customer002@gmail.com\",\r\n  \"citizenId\": \"001234567891\",\r\n  \"address\": \"456 Le Loi, Q3, TP.HCM\",\r\n  \"dateOfBirth\": \"1995-08-20\",\r\n  \"gender\": \"FEMALE\",\r\n  \"occupation\": \"Teacher\",\r\n  \"username\": \"customer002\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/staff/customers/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"staff",
+										"customers",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xem chi tiết khách hàng",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/staff/customers/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"staff",
+										"customers",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tìm kiếm/Liệt kê khách hàng",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/staff/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"staff",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Customer",
+					"item": [
+						{
+							"name": "Quản lý Thông tin Cá nhân",
+							"item": [
+								{
+									"name": "Xem thông tin cá nhân",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "lang",
+												"value": "vi",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/customer/profile",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"customer",
+												"profile"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Cập nhật thông tin cá nhân",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"fullName\": \"Nguyễn Văn A\",\r\n  \"phoneNumber\": \"0912345671\",\r\n  \"email\": \"nguyenvana@email.com\",\r\n  \"address\": \"456 Đường XYZ, Quận 2, TP.HCM\",\r\n  \"occupation\": \"Senior Software Engineer\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/customer/profile",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"customer",
+												"profile"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Quản lý Tài khoản Ngân hàng",
+							"item": [
+								{
+									"name": "Xem danh sách tài khoản",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/customer/accounts",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"customer",
+												"accounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Xem chi tiết tài khoản",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"status\": \"INACTIVE\"\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/customer/accounts/2",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"customer",
+												"accounts",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Xem số dư tài khoản",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/customer/accounts/2/balance",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"customer",
+												"accounts",
+												"2",
+												"balance"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Giao dịch và Chuyển khoản",
+							"item": [
+								{
+									"name": "Chuyển khoản",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"fromAccountNumber\": \"384851652783\",\r\n  \"toAccountNumber\": \"846499683846\",\r\n  \"amount\": 1000000,\r\n  \"description\": \"Chuyển tiền cho bạn\",\r\n  \"transactionPassword\": \"optional_password\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/customer/transactions/transfer",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"customer",
+												"transactions",
+												"transfer"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Xem lịch sử giao dịch",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/customer/transactions?accountId=2&page=0&size=20",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"customer",
+												"transactions"
+											],
+											"query": [
+												{
+													"key": "accountId",
+													"value": "2"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												},
+												{
+													"key": "size",
+													"value": "20"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Xem chi tiết giao dịch",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/customer/transactions/5",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"customer",
+												"transactions",
+												"5"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "get profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customers/profile/1?lang=vi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"profile",
+								"1"
+							],
+							"query": [
+								{
+									"key": "lang",
+									"value": "vi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test đa ngôn ngữ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/test?lang=vi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"test"
+							],
+							"query": [
+								{
+									"key": "lang",
+									"value": "vi"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
