@@ -3,6 +3,7 @@ package com.vietbank.vietbank_digital.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "staff")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

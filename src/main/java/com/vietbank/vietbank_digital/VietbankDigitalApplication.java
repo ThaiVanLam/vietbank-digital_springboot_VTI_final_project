@@ -19,8 +19,10 @@ public class VietbankDigitalApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("*") // you can restrict this to specific domains
-						.allowedMethods("GET", "POST", "PUT", "DELETE");
+						.allowedOrigins("*")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowedHeaders("*")
+						.maxAge(3600);
 			}
 		};
 	}
