@@ -18,7 +18,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+
+        // Kiểm tra trạng thái user
+        if (user.getStatus() == User.Status.INACTIVE) {
+            throw new UsernameNotFoundException("User account has been deactivated");
+        }
+
+        if (user.getStatus() == User.Status.LOCKED) {
+            throw new UsernameNotFoundException("User account has been locked");
+        }
 
         return UserDetailsImpl.build(user);
     }

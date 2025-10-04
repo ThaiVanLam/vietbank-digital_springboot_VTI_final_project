@@ -1,5 +1,6 @@
 package com.vietbank.vietbank_digital.controller;
 
+import com.vietbank.vietbank_digital.dto.request.UpdateCustomerProfileRequestDTO;
 import com.vietbank.vietbank_digital.dto.response.CustomerResponseDTO;
 import com.vietbank.vietbank_digital.security.services.UserDetailsImpl;
 import com.vietbank.vietbank_digital.service.CustomerService;

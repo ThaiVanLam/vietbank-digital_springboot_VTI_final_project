@@ -22,30 +22,45 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-
     private Long id;
     private String username;
     private String email;
 
     @JsonIgnore
     private String password;
+
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    private boolean enabled;
+    private boolean accountNonLocked;
+
+    public UserDetailsImpl(Long id, String username, String email, String password,
+                           Collection<? extends GrantedAuthority> authorities,
+                           boolean enabled, boolean accountNonLocked) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.enabled = enabled;
+        this.accountNonLocked = accountNonLocked;
     }
 
     public static UserDetailsImpl build(User user) {
-
-
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getRoleName().name());
 
+        // Kiểm tra trạng thái user
+        boolean enabled = user.getStatus() == User.Status.ACTIVE;
+        boolean accountNonLocked = user.getStatus() != User.Status.LOCKED;
+
         return new UserDetailsImpl(
-                user.getUserId(), user.getUsername(), user.getEmail(), user.getPassword(), Collections.singletonList(authority)
+                user.getUserId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPassword(),
+                Collections.singletonList(authority),
+                enabled,
+                accountNonLocked
         );
     }
 
@@ -71,7 +86,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override
@@ -81,7 +96,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     @Override
