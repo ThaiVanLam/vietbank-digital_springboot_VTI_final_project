@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.List;
+
 /**
  * Interface cho Bank Account Service
  */
@@ -82,4 +84,21 @@ public interface BankAccountService {
      * @return BankAccountResponseDTO
      */
     BankAccountResponseDTO getAccountByAccountNumber(String accountNumber);
+
+    /**
+     * Lấy danh sách tài khoản của customer (List thay vì Page)
+     *
+     * @param customerId - ID của customer
+     * @return List của BankAccountResponseDTO
+     */
+    List<BankAccountResponseDTO> getAccountsByCustomerId(Long customerId);
+
+    /**
+     * Lấy chi tiết tài khoản và verify ownership
+     *
+     * @param accountId - ID của tài khoản
+     * @param customerId - ID của customer (để verify)
+     * @return BankAccountResponseDTO
+     */
+    BankAccountResponseDTO getAccountByIdAndCustomerId(Long accountId, Long customerId);
 }

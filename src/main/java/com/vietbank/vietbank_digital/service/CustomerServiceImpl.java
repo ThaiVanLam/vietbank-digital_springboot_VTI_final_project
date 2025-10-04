@@ -3,6 +3,7 @@ package com.vietbank.vietbank_digital.service;
 import com.vietbank.vietbank_digital.config.exception.DuplicateResourceException;
 import com.vietbank.vietbank_digital.config.exception.ResourceNotFoundException;
 import com.vietbank.vietbank_digital.dto.request.CustomerRequestDTO;
+import com.vietbank.vietbank_digital.dto.request.UpdateCustomerProfileRequestDTO;
 import com.vietbank.vietbank_digital.dto.response.CustomerResponseDTO;
 import com.vietbank.vietbank_digital.model.AppRole;
 import com.vietbank.vietbank_digital.model.Customer;
@@ -148,6 +149,52 @@ public class CustomerServiceImpl implements CustomerService {
         User user = customer.getUser();
         user.setStatus(User.Status.INACTIVE);
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public CustomerResponseDTO updateCustomerProfile(Long customerId, UpdateCustomerProfileRequestDTO requestDTO) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("error.customer.notFound", customerId));
+
+        // Kiểm tra trùng lặp phone và email (ngoại trừ chính nó)
+        validateProfileUpdateData(customerId, requestDTO);
+
+        // Cập nhật User info
+        User user = customer.getUser();
+        user.setFullName(requestDTO.getFullName());
+        user.setEmail(requestDTO.getEmail());
+        user.setPhoneNumber(requestDTO.getPhoneNumber());
+
+        // Cập nhật Customer info (chỉ cho phép cập nhật address và occupation)
+        customer.setAddress(requestDTO.getAddress());
+        customer.setOccupation(requestDTO.getOccupation());
+
+        Customer updatedCustomer = customerRepository.save(customer);
+        return convertToResponseDTO(updatedCustomer);
+    }
+
+    /**
+     * Validate dữ liệu khi customer tự cập nhật profile
+     */
+    private void validateProfileUpdateData(Long customerId, UpdateCustomerProfileRequestDTO requestDTO) {
+        // Kiểm tra phone number
+        userRepository.findByPhoneNumber(requestDTO.getPhoneNumber())
+                .ifPresent(user -> {
+                    Customer existingCustomer = customerRepository.findByUser(user).orElse(null);
+                    if (existingCustomer != null && !existingCustomer.getCustomerId().equals(customerId)) {
+                        throw new DuplicateResourceException("error.customer.duplicatePhone");
+                    }
+                });
+
+        // Kiểm tra email
+        userRepository.findByEmail(requestDTO.getEmail())
+                .ifPresent(user -> {
+                    Customer existingCustomer = customerRepository.findByUser(user).orElse(null);
+                    if (existingCustomer != null && !existingCustomer.getCustomerId().equals(customerId)) {
+                        throw new DuplicateResourceException("error.customer.duplicateEmail");
+                    }
+                });
     }
 
     /**

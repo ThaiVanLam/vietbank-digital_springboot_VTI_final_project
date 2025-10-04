@@ -2,6 +2,7 @@ package com.vietbank.vietbank_digital.service;
 
 import com.vietbank.vietbank_digital.config.exception.ResourceNotFoundException;
 import com.vietbank.vietbank_digital.config.exception.TransactionFailedException;
+import com.vietbank.vietbank_digital.config.exception.UnauthorizedException;
 import com.vietbank.vietbank_digital.dto.request.CreateAccountRequestDTO;
 import com.vietbank.vietbank_digital.dto.request.DepositRequestDTO;
 import com.vietbank.vietbank_digital.dto.response.BankAccountResponseDTO;
@@ -21,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Implementation của BankAccountService
@@ -136,6 +139,32 @@ public class BankAccountServiceImpl implements BankAccountService{
 
         BankAccount updatedAccount = bankAccountRepository.save(account);
         return convertToResponseDTO(updatedAccount);
+    }
+
+    @Override
+    public List<BankAccountResponseDTO> getAccountsByCustomerId(Long customerId) {
+        // Kiểm tra customer tồn tại
+        if (!customerRepository.existsById(customerId)) {
+            throw new ResourceNotFoundException("error.customer.notFound", customerId);
+        }
+
+        List<BankAccount> accounts = bankAccountRepository.findByCustomerCustomerId(customerId);
+        return accounts.stream()
+                .map(this::convertToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public BankAccountResponseDTO getAccountByIdAndCustomerId(Long accountId, Long customerId) {
+        BankAccount account = bankAccountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("error.account.notFound.byId", accountId));
+
+        // Verify ownership
+        if (!account.getCustomer().getCustomerId().equals(customerId)) {
+            throw new UnauthorizedException("error.unauthorized");
+        }
+
+        return convertToResponseDTO(account);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.vietbank.vietbank_digital.service;
 
 import com.vietbank.vietbank_digital.dto.request.CustomerRequestDTO;
+import com.vietbank.vietbank_digital.dto.request.UpdateCustomerProfileRequestDTO;
 import com.vietbank.vietbank_digital.dto.response.CustomerResponseDTO;
 import com.vietbank.vietbank_digital.model.Customer;
 import com.vietbank.vietbank_digital.request.CreatingCustomerRequest;
@@ -104,4 +105,16 @@ public interface CustomerService {
      * @return true nếu đã tồn tại, false nếu chưa
      */
     boolean existsByCitizenId(String citizenId);
+
+    /**
+     * Cập nhật thông tin cá nhân của Customer (bởi chính họ)
+     * Chỉ cho phép cập nhật một số trường nhất định
+     *
+     * @param customerId - ID của khách hàng
+     * @param requestDTO - Thông tin cập nhật
+     * @return CustomerResponseDTO đã được cập nhật
+     * @throws ResourceNotFoundException nếu không tìm thấy
+     * @throws DuplicateResourceException nếu thông tin mới bị trùng
+     */
+    CustomerResponseDTO updateCustomerProfile(Long customerId, UpdateCustomerProfileRequestDTO requestDTO);
 }
