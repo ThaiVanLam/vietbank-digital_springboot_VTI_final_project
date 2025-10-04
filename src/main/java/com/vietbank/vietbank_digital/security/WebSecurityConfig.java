@@ -1,6 +1,7 @@
 package com.vietbank.vietbank_digital.security;
 
 
+import com.vietbank.vietbank_digital.model.AppRole;
 import com.vietbank.vietbank_digital.model.Role;
 import com.vietbank.vietbank_digital.repository.RoleRepository;
 import com.vietbank.vietbank_digital.repository.UserRepository;
@@ -78,5 +79,20 @@ public class WebSecurityConfig {
         return (web -> web.ignoring().requestMatchers("/v2/api-docs", "/webjar/**", "/configuration/ui", "/swagger-resources/**", "/configuration/security", "/swagger-ui.html"));
     }
 
+    @Bean
+    public CommandLineRunner initRoles(RoleRepository roleRepository) {
+        return args -> {
+            // Kiểm tra và tạo ROLE_CUSTOMER nếu chưa có
+            if (roleRepository.findByRoleName(AppRole.ROLE_CUSTOMER).isEmpty()) {
+                roleRepository.save(new Role(AppRole.ROLE_CUSTOMER));
+                System.out.println("✅ Created ROLE_CUSTOMER");
+            }
 
+            // Kiểm tra và tạo ROLE_STAFF nếu chưa có
+            if (roleRepository.findByRoleName(AppRole.ROLE_STAFF).isEmpty()) {
+                roleRepository.save(new Role(AppRole.ROLE_STAFF));
+                System.out.println("✅ Created ROLE_STAFF");
+            }
+        };
+    }
 }
