@@ -13,9 +13,9 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long customerId;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -43,5 +43,13 @@ public class Customer {
 
     public enum Gender {
         MALE, FEMALE, OTHER
+    }
+
+    public Customer(String citizenId, String address, LocalDate dateOfBirth, Gender gender, String occupation) {
+        this.citizenId = citizenId;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.occupation = occupation;
     }
 }
