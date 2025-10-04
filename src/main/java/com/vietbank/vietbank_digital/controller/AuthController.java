@@ -97,7 +97,7 @@ public class AuthController {
 
         user.setRole(staffRole);
 
-        Staff staff = new Staff(user.getId(), user, employeeCodeGenerator.generateSequentialUniqueCode(), signupRequest.getDepartment(), signupRequest.getPosition());
+        Staff staff = new Staff(user.getUserId(), user, employeeCodeGenerator.generateSequentialUniqueCode(), signupRequest.getDepartment(), signupRequest.getPosition());
 
         staffRepository.save(staff);
         return ResponseEntity.ok(new MessageResponse("Staff registered successfully"));
